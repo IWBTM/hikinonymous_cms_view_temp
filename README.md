@@ -7,7 +7,7 @@
 
 ### 저 위에 인텔리제이 실행
 1. Edit Configurations 클릭
-2. 아마 Node.js로 잡으면 됐었던듯
+2. npm으로 잡아야함
 3. scripts: start
 4. Node Option: --openssl-legacy-provider 
 
