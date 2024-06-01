@@ -1,4 +1,6 @@
 import React from "react";
+import axios from "axios";
+import Notification from "../components/Notification";
 
 var UserStateContext = React.createContext();
 var UserDispatchContext = React.createContext();
@@ -17,7 +19,7 @@ function userReducer(state, action) {
 
 function UserProvider({ children }) {
   var [state, dispatch] = React.useReducer(userReducer, {
-    isAuthenticated: !!localStorage.getItem("id_token"),
+    isAuthenticated: !!localStorage.getItem("AccessToken"),
   });
 
   return (
@@ -49,19 +51,38 @@ export { UserProvider, useUserState, useUserDispatch, loginUser, signOut };
 
 // ###########################################################
 
-function loginUser(dispatch, login, password, history, setIsLoading, setError) {
+function loginUser(dispatch, login, password, history, setIsLoading, setError, setErrorMessage) {
+
   setError(false);
   setIsLoading(true);
 
   if (!!login && !!password) {
-    setTimeout(() => {
-      localStorage.setItem("id_token", "1");
-      dispatch({ type: "LOGIN_SUCCESS" });
-      setError(null);
-      setIsLoading(false);
-
-      history.push("/app/dashboard");
-    }, 2000);
+    // axios 로그인
+    axios.post('http://localhost:8082/cms/login/proc', JSON.stringify({
+      "email": login,
+      "pwd": password
+    }), {
+      headers: {
+        "Content-Type": "application/json; charset=utf-8",
+      }
+    })
+      .then((data)=>{
+        data = data.data;
+        if (data.code == 200) {
+          localStorage.setItem("AccessToken", data.data);
+          dispatch({ type: "LOGIN_SUCCESS" });
+          setError(null);
+          setIsLoading(false);
+          history.push("/app/dashboard");
+        } else {
+          setErrorMessage(data.message);
+          setError(true);
+        }
+        setIsLoading(false);
+      })
+      .catch((err)=>{
+        console.log('err', err);
+      });
   } else {
     dispatch({ type: "LOGIN_FAILURE" });
     setError(true);
@@ -70,7 +91,7 @@ function loginUser(dispatch, login, password, history, setIsLoading, setError) {
 }
 
 function signOut(dispatch, history) {
-  localStorage.removeItem("id_token");
+  localStorage.removeItem("AccessToken");
   dispatch({ type: "SIGN_OUT_SUCCESS" });
   history.push("/login");
 }
