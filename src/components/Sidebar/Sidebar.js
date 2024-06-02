@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Drawer, IconButton, List } from "@material-ui/core";
+import { Drawer, IconButton, List, Typography } from "@material-ui/core";
 import {
   Home as HomeIcon,
   NotificationsNone as NotificationsIcon,
@@ -20,7 +20,6 @@ import useStyles from "./styles";
 
 // components
 import SidebarLink from "./components/SidebarLink/SidebarLink";
-import Dot from "./components/Dot";
 
 // context
 import {
@@ -28,6 +27,7 @@ import {
   useLayoutDispatch,
   toggleSidebar,
 } from "../../context/LayoutContext";
+import api from "../../api/api";
 
 const structure = [
   { id: 0, label: "Dashboard", link: "/app/dashboard", icon: <HomeIcon /> },
@@ -69,6 +69,10 @@ function Sidebar({ location }) {
   // global
   var { isSidebarOpened } = useLayoutState();
   var layoutDispatch = useLayoutDispatch();
+  var [structure, setStructure] = useState([]);
+  var [loading, setLoading] = useState(true);
+  var [error, setError] = useState(null);
+  var [errorMessage, setErrorMessage] = useState("");
 
   // local
   var [isPermanent, setPermanent] = useState(true);
@@ -76,6 +80,22 @@ function Sidebar({ location }) {
   useEffect(function() {
     window.addEventListener("resize", handleWindowWidthChange);
     handleWindowWidthChange();
+
+    const fetchData = async () => {
+      try {
+        const response = await api.get("/cms/menu/list");
+        console.log('response:: ', response);
+        // setStructure(response.data);
+        setLoading(false);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+        setError(true);
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+
     return function cleanup() {
       window.removeEventListener("resize", handleWindowWidthChange);
     };
@@ -131,6 +151,15 @@ function Sidebar({ location }) {
       setPermanent(true);
     }
   }
+
+  if (loading) {
+    return <Typography>Loading...</Typography>;
+  }
+
+  if (error) {
+    return <Typography color="error">An error occurred while fetching data.</Typography>;
+  }
+
 }
 
 export default withRouter(Sidebar);

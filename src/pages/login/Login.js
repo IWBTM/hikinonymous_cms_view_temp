@@ -5,12 +5,10 @@ import {
   Typography,
   Button,
   Tabs,
-  Tab,
   TextField,
   Fade,
 } from "@material-ui/core";
 import { withRouter } from "react-router-dom";
-import classnames from "classnames";
 
 // styles
 import useStyles from "./styles";
@@ -21,7 +19,6 @@ import google from "../../images/google.svg";
 
 // context
 import { useUserDispatch, loginUser } from "../../context/UserContext";
-import Notification from "../../components/Notification";
 
 function Login(props) {
   var classes = useStyles();
