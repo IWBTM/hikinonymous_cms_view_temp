@@ -85,8 +85,10 @@ function Sidebar({ location }) {
       try {
         const response = await api.get("/cms/menu/list");
         console.log('response:: ', response);
-        // setStructure(response.data);
-        setLoading(false);
+        if (response.code == 200) {
+          setStructure(response.data);
+          setLoading(false);
+        }
       } catch (error) {
         console.error("Error fetching data:", error);
         setError(true);
