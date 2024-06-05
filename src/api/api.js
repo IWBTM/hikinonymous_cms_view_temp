@@ -8,8 +8,7 @@ const api = axios.create({
     "Access-Control-Allow-Origin": "*",
     "Access-Control-Allow-Headers": "*"
   },
+  withCredentials: true
 });
-
-api.defaults.withCredentials = true;
 
 export default api;
