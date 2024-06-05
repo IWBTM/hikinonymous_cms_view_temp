@@ -1,5 +1,4 @@
 import React from "react";
-import axios from "axios";
 import api from "../api/api";
 
 var UserStateContext = React.createContext();
@@ -19,7 +18,7 @@ function userReducer(state, action) {
 
 function UserProvider({ children }) {
   var [state, dispatch] = React.useReducer(userReducer, {
-    isAuthenticated: !!localStorage.getItem("AccessToken"),
+    isAuthenticated: !!localStorage.getItem("Access-Token"),
   });
 
   return (
@@ -58,7 +57,7 @@ function loginUser(dispatch, login, password, history, setIsLoading, setError, s
 
   if (!!login && !!password) {
     // axios 로그인
-    axios.post('http://localhost:8082/cms/login/proc', JSON.stringify({
+    api.post('http://localhost:8082/cms/login/proc', JSON.stringify({
       "email": login,
       "pwd": password
     }), {
@@ -69,7 +68,7 @@ function loginUser(dispatch, login, password, history, setIsLoading, setError, s
       .then((data)=>{
         data = data.data;
         if (data.code == 200) {
-          localStorage.setItem("AccessToken", data.data);
+          localStorage.setItem("Access-Token", data.data);
           dispatch({ type: "LOGIN_SUCCESS" });
           setError(null);
           setIsLoading(false);
@@ -91,7 +90,7 @@ function loginUser(dispatch, login, password, history, setIsLoading, setError, s
 }
 
 function signOut(dispatch, history) {
-  localStorage.removeItem("AccessToken");
+  localStorage.removeItem("Access-Token");
   dispatch({ type: "SIGN_OUT_SUCCESS" });
   history.push("/login");
 }

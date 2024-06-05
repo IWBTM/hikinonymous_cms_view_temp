@@ -29,38 +29,36 @@ import {
 } from "../../context/LayoutContext";
 import api from "../../api/api";
 
-const structure = [
-  { id: 0, label: "Dashboard", link: "/app/dashboard", icon: <HomeIcon /> },
-  {
-    id: 1,
-    label: "Typography",
-    link: "/app/typography",
-    icon: <TypographyIcon />,
-  },
-  { id: 2, label: "Tables", link: "/app/tables", icon: <TableIcon /> },
-  {
-    id: 3,
-    label: "Notifications",
-    link: "/app/notifications",
-    icon: <NotificationsIcon />,
-  },
-  {
-    id: 4,
-    label: "UI Elements",
-    link: "/app/ui",
-    icon: <UIElementsIcon />,
-    children: [
-      { label: "Icons", link: "/app/ui/icons" },
-      { label: "Charts", link: "/app/ui/charts" },
-      { label: "Maps", link: "/app/ui/maps" },
-    ],
-  },
-  { id: 5, type: "divider" },
-  { id: 6, type: "title", label: "HELP" },
-  { id: 7, label: "Library", link: "", icon: <LibraryIcon /> },
-  { id: 8, label: "Support", link: "", icon: <SupportIcon /> },
-  { id: 9, label: "FAQ", link: "", icon: <FAQIcon /> },
-];
+  // { id: 0, label: "Dashboard", link: "/app/dashboard", icon: <HomeIcon /> },
+  // {
+  //   id: 1,
+  //   label: "Typography",
+  //   link: "/app/typography",
+  //   icon: <TypographyIcon />,
+  // },
+  // { id: 2, label: "Tables", link: "/app/tables", icon: <TableIcon /> },
+  // {
+  //   id: 3,
+  //   label: "Notifications",
+  //   link: "/app/notifications",
+  //   icon: <NotificationsIcon />,
+  // },
+  // {
+  //   id: 4,
+  //   label: "UI Elements",
+  //   link: "/app/ui",
+  //   icon: <UIElementsIcon />,
+  //   children: [
+  //     { label: "Icons", link: "/app/ui/icons" },
+  //     { label: "Charts", link: "/app/ui/charts" },
+  //     { label: "Maps", link: "/app/ui/maps" },
+  //   ],
+  // },
+  // { id: 5, type: "divider" },
+  // { id: 6, type: "title", label: "HELP" },
+  // { id: 7, label: "Library", link: "", icon: <LibraryIcon /> },
+  // { id: 8, label: "Support", link: "", icon: <SupportIcon /> },
+  // { id: 9, label: "FAQ", link: "", icon: <FAQIcon /> },
 
 function Sidebar({ location }) {
   var classes = useStyles();
@@ -84,9 +82,28 @@ function Sidebar({ location }) {
     const fetchData = async () => {
       try {
         const response = await api.get("/cms/menu/list");
-        console.log('response:: ', response);
-        if (response.code == 200) {
-          setStructure(response.data);
+        if (response.data.code == 200) {
+          let data = response.data.data;
+          let menuList = [];
+          for (let i = 0; i < data.length; i++) {
+            let cmsMenu = {};
+            if (data[i].menuLevel == 1) {
+              cmsMenu = {
+                id: data[i].cmsMenuSeq,
+                label: data[i].menuNm,
+                link: data[i].filePath,
+                icon: <UIElementsIcon />,
+                children: []
+              };
+              for (let j = 0; j < data.length; j++) {
+                if (data[j].authDir == data[i].authDir && data[j].menuLevel == 2) {
+                  cmsMenu.children.push({ label: data[j].menuNm, link: data[j].filePath });
+                }
+              }
+            }
+            menuList.push(cmsMenu);
+          }
+          setStructure(menuList);
           setLoading(false);
         }
       } catch (error) {
@@ -101,7 +118,7 @@ function Sidebar({ location }) {
     return function cleanup() {
       window.removeEventListener("resize", handleWindowWidthChange);
     };
-  });
+  }, []);
 
   return (
     <Drawer
@@ -131,7 +148,7 @@ function Sidebar({ location }) {
       <List className={classes.sidebarList}>
         {structure.map(link => (
           <SidebarLink
-            key={link.id}
+            key={link.cmsMenuSeq}
             location={location}
             isSidebarOpened={isSidebarOpened}
             {...link}
