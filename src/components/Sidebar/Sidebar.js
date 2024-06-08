@@ -82,12 +82,12 @@ function Sidebar({ location }) {
     const fetchData = async () => {
       try {
         const response = await api.get("/cms/menu/list");
-        if (response.data.code == 200) {
+        if (response.data.code === 200) {
           let data = response.data.data;
           let menuList = [];
           for (let i = 0; i < data.length; i++) {
             let cmsMenu = {};
-            if (data[i].menuLevel == 1) {
+            if (data[i].menuLevel === 1) {
               cmsMenu = {
                 id: data[i].cmsMenuSeq,
                 label: data[i].menuNm,
@@ -96,7 +96,7 @@ function Sidebar({ location }) {
                 children: []
               };
               for (let j = 0; j < data.length; j++) {
-                if (data[j].authDir == data[i].authDir && data[j].menuLevel == 2) {
+                if (data[j].authDir === data[i].authDir && data[j].menuLevel === 2) {
                   cmsMenu.children.push({ label: data[j].menuNm, link: data[j].filePath });
                 }
               }
