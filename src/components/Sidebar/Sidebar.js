@@ -11,6 +11,14 @@ import {
   CategoryOutlined as CategoryIcon,
   BallotOutlined as BoardIcon,
   ArrowBack as ArrowBackIcon,
+  ViewAgenda as CmsMenuIcon,
+  ViewAgenda as FrontMenuIcon,
+  VpnKey as AuthIcon,
+  OpenInBrowser as PopupIcon,
+  Web as BannerIcon,
+  Help as InquiryIcon,
+  LiveHelp as FaqIcon,
+  Notifications as NoticeIcon,
 } from "@material-ui/icons";
 import { useTheme } from "@material-ui/styles";
 import { withRouter } from "react-router-dom";
@@ -96,6 +104,22 @@ function Sidebar({ location }) {
         case 'TERM_MANAGEMENT': icon = <TermIcon/>;
           break;
         case 'CODE_MANAGEMENT': icon = <CodeIcon/>;
+          break;
+        case 'CMS_MENU_MANAGEMENT': icon = <CmsMenuIcon/>;
+          break;
+        case 'ADMIN_AUTH_MANAGEMENT': icon = <AuthIcon/>;
+          break;
+        case 'FRONT_MENU_MANAGEMENT': icon = <FrontMenuIcon/>;
+          break;
+        case 'POPUP_MANAGEMENT': icon = <PopupIcon/>;
+          break;
+        case 'BANNER_MANAGEMENT': icon = <BannerIcon/>;
+          break;
+        case 'INQUIRY_MANAGEMENT': icon = <InquiryIcon/>;
+          break;
+        case 'FAQ_MANAGEMENT': icon = <FaqIcon/>;
+          break;
+        case 'NOTICE_MANAGEMENT': icon = <NoticeIcon/>;
           break;
       }
       return icon;
