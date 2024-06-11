@@ -1,5 +1,5 @@
 import React from "react";
-import api from "../api/api";
+import axios from "axios";
 
 var UserStateContext = React.createContext();
 var UserDispatchContext = React.createContext();
@@ -57,7 +57,7 @@ function loginUser(dispatch, login, password, history, setIsLoading, setError, s
 
   if (!!login && !!password) {
     // axios 로그인
-    api.post('http://localhost:8082/cms/login/proc', JSON.stringify({
+    axios.post('http://localhost:8082/cms/login/proc', JSON.stringify({
       "email": login,
       "pwd": password
     }), {
