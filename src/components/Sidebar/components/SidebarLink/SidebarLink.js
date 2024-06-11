@@ -124,7 +124,6 @@ export default function SidebarLink({
                 location={location}
                 isSidebarOpened={isSidebarOpened}
                 classes={classes}
-                nested
                 {...childrenLink}
               />
             ))}

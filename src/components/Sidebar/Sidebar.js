@@ -80,6 +80,27 @@ function Sidebar({ location }) {
     window.addEventListener("resize", handleWindowWidthChange);
     handleWindowWidthChange();
 
+    const setMenuIcon = (menuCode) => {
+      let icon;
+      switch (menuCode) {
+        case 'ADMIN_MANAGEMENT': icon = <AdminIcon/>;
+          break;
+        case 'SITE_MANAGEMENT': icon = <SiteIcon/>;
+          break;
+        case 'MEMBER_MANAGEMENT': icon = <MemberIcon/>;
+          break;
+        case 'CATEGORY_MANAGEMENT': icon = <CategoryIcon/>;
+          break;
+        case 'BOARD_MANAGEMENT': icon = <BoardIcon/>;
+          break;
+        case 'TERM_MANAGEMENT': icon = <TermIcon/>;
+          break;
+        case 'CODE_MANAGEMENT': icon = <CodeIcon/>;
+          break;
+      }
+      return icon;
+    }
+
     const fetchData = async () => {
       try {
         const response = await api.get("/cms/menu/list");
@@ -89,37 +110,28 @@ function Sidebar({ location }) {
           for (let i = 0; i < data.length; i++) {
             let cmsMenu = {};
             if (data[i].menuLevel === 1) {
-              let icon;
-              switch (data[i].menuCode) {
-                case 'ADMIN_MANAGEMENT': icon = <AdminIcon/>;
-                  break;
-                case 'SITE_MANAGEMENT': icon = <SiteIcon/>;
-                  break;
-                case 'MEMBER_MANAGEMENT': icon = <MemberIcon/>;
-                  break;
-                case 'CATEGORY_MANAGEMENT': icon = <CategoryIcon/>;
-                  break;
-                case 'BOARD_MANAGEMENT': icon = <BoardIcon/>;
-                  break;
-                case 'TERM_MANAGEMENT': icon = <TermIcon/>;
-                  break;
-                case 'CODE_MANAGEMENT': icon = <CodeIcon/>;
-                  break;
-              }
               cmsMenu = {
+                key: data[i].cmsMenuSeq,
                 id: data[i].cmsMenuSeq,
                 label: data[i].menuNm,
                 link: data[i].filePath,
-                icon: icon,
+                icon: setMenuIcon(data[i].menuCode),
                 children: []
               };
               for (let j = 0; j < data.length; j++) {
                 if (data[j].authDir === data[i].authDir && data[j].menuLevel === 2) {
-                  cmsMenu.children.push({ label: data[j].menuNm, link: data[j].filePath });
+                  cmsMenu.children.push({
+                    key: data[j].cmsMenuSeq,
+                    id: data[j].cmsMenuSeq,
+                    label: data[j].menuNm,
+                    link: data[j].filePath,
+                    icon: setMenuIcon(data[j].menuCode)
+                  });
                 }
               }
               menuList.push(cmsMenu);
             }
+            console.log('cmsMenu:: ', cmsMenu);
           }
           setStructure(menuList);
           setLoading(false);
@@ -166,7 +178,7 @@ function Sidebar({ location }) {
       <List className={classes.sidebarList}>
         {structure.map(link => (
           <SidebarLink
-            key={link.cmsMenuSeq}
+            key={link.id}
             location={location}
             isSidebarOpened={isSidebarOpened}
             {...link}
