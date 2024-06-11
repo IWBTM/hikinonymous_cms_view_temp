@@ -11,7 +11,7 @@ import {
   CategoryOutlined as CategoryIcon,
   BallotOutlined as BoardIcon,
   ArrowBack as ArrowBackIcon,
-  ViewAgenda as CmsMenuIcon,
+  AccountTree as CmsMenuIcon,
   ViewAgenda as FrontMenuIcon,
   VpnKey as AuthIcon,
   OpenInBrowser as PopupIcon,
@@ -20,6 +20,7 @@ import {
   LiveHelp as FaqIcon,
   Notifications as NoticeIcon,
   NotInterested as DropMemberIcon,
+  Accessibility as PrivacyIcon,
 } from "@material-ui/icons";
 import { useTheme } from "@material-ui/styles";
 import { withRouter } from "react-router-dom";
@@ -123,6 +124,8 @@ function Sidebar({ location }) {
         case 'NOTICE_MANAGEMENT': icon = <NoticeIcon/>;
           break;
         case 'DROP_MEMBER_MANAGEMENT': icon = <DropMemberIcon/>;
+          break;
+        case 'PRIVACY_MANAGEMENT': icon = <PrivacyIcon/>;
           break;
       }
       return icon;
