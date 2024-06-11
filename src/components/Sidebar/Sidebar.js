@@ -19,6 +19,7 @@ import {
   Help as InquiryIcon,
   LiveHelp as FaqIcon,
   Notifications as NoticeIcon,
+  NotInterested as DropMemberIcon,
 } from "@material-ui/icons";
 import { useTheme } from "@material-ui/styles";
 import { withRouter } from "react-router-dom";
@@ -120,6 +121,8 @@ function Sidebar({ location }) {
         case 'FAQ_MANAGEMENT': icon = <FaqIcon/>;
           break;
         case 'NOTICE_MANAGEMENT': icon = <NoticeIcon/>;
+          break;
+        case 'DROP_MEMBER_MANAGEMENT': icon = <DropMemberIcon/>;
           break;
       }
       return icon;
