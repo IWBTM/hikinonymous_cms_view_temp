@@ -77,7 +77,6 @@ function loginUser(dispatch, login, password, history, setIsLoading, setError, s
           setErrorMessage(data.message);
           setError(true);
         }
-        setIsLoading(false);
       })
       .catch((err)=>{
         console.log('err', err);

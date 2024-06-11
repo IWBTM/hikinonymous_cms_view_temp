@@ -29,7 +29,7 @@ export default function Error() {
           404
         </Typography>
         <Typography variant="h5" color="primary" className={classes.textRow}>
-          Oops. Looks like the page you're looking for no longer exists
+          해당하는 페이지를 찾지 못 했습니다.
         </Typography>
         <Typography
           variant="h6"
@@ -37,7 +37,7 @@ export default function Error() {
           colorBrightness="secondary"
           className={classnames(classes.textRow, classes.safetyText)}
         >
-          But we're here to bring you back to safety
+          관리자에게 문의해주세요.
         </Typography>
         <Button
           variant="contained"
@@ -47,7 +47,7 @@ export default function Error() {
           size="large"
           className={classes.backButton}
         >
-          Back to Home
+          홈으로 돌아가기
         </Button>
       </Paper>
     </Grid>

@@ -3,13 +3,13 @@ import { Drawer, IconButton, List, Typography } from "@material-ui/core";
 import {
   Home as HomeIcon,
   NotificationsNone as NotificationsIcon,
-  FormatSize as TypographyIcon,
-  FilterNone as UIElementsIcon,
+  GridOn as CodeIcon,
+  CheckBox as TermIcon,
   SupervisorAccountOutlined as AdminIcon,
-  BorderAll as TableIcon,
-  QuestionAnswer as SupportIcon,
-  LibraryBooks as LibraryIcon,
-  HelpOutline as FAQIcon,
+  WebOutlined as SiteIcon,
+  PersonOutline as MemberIcon,
+  CategoryOutlined as CategoryIcon,
+  BallotOutlined as BoardIcon,
   ArrowBack as ArrowBackIcon,
 } from "@material-ui/icons";
 import { useTheme } from "@material-ui/styles";
@@ -90,8 +90,22 @@ function Sidebar({ location }) {
             let cmsMenu = {};
             if (data[i].menuLevel === 1) {
               let icon;
-              if (data[i].menuCode === 'ADMIN_MANAGEMENT') icon = <AdminIcon/>;
-              else if (data[i].menuCode === 'ADMIN_MANAGEMENT') icon = <AdminIcon/>;
+              switch (data[i].menuCode) {
+                case 'ADMIN_MANAGEMENT': icon = <AdminIcon/>;
+                  break;
+                case 'SITE_MANAGEMENT': icon = <SiteIcon/>;
+                  break;
+                case 'MEMBER_MANAGEMENT': icon = <MemberIcon/>;
+                  break;
+                case 'CATEGORY_MANAGEMENT': icon = <CategoryIcon/>;
+                  break;
+                case 'BOARD_MANAGEMENT': icon = <BoardIcon/>;
+                  break;
+                case 'TERM_MANAGEMENT': icon = <TermIcon/>;
+                  break;
+                case 'CODE_MANAGEMENT': icon = <CodeIcon/>;
+                  break;
+              }
               cmsMenu = {
                 id: data[i].cmsMenuSeq,
                 label: data[i].menuNm,
@@ -107,7 +121,6 @@ function Sidebar({ location }) {
               menuList.push(cmsMenu);
             }
           }
-          console.log('menuList:: ', menuList);
           setStructure(menuList);
           setLoading(false);
         }
