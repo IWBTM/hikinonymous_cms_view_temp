@@ -5,6 +5,7 @@ import {
   NotificationsNone as NotificationsIcon,
   FormatSize as TypographyIcon,
   FilterNone as UIElementsIcon,
+  SupervisorAccountOutlined as AdminIcon,
   BorderAll as TableIcon,
   QuestionAnswer as SupportIcon,
   LibraryBooks as LibraryIcon,
@@ -88,11 +89,14 @@ function Sidebar({ location }) {
           for (let i = 0; i < data.length; i++) {
             let cmsMenu = {};
             if (data[i].menuLevel === 1) {
+              let icon;
+              if (data[i].menuCode === 'ADMIN_MANAGEMENT') icon = <AdminIcon/>;
+              else if (data[i].menuCode === 'ADMIN_MANAGEMENT') icon = <AdminIcon/>;
               cmsMenu = {
                 id: data[i].cmsMenuSeq,
                 label: data[i].menuNm,
                 link: data[i].filePath,
-                icon: <UIElementsIcon />,
+                icon: icon,
                 children: []
               };
               for (let j = 0; j < data.length; j++) {
@@ -100,9 +104,10 @@ function Sidebar({ location }) {
                   cmsMenu.children.push({ label: data[j].menuNm, link: data[j].filePath });
                 }
               }
+              menuList.push(cmsMenu);
             }
-            menuList.push(cmsMenu);
           }
+          console.log('menuList:: ', menuList);
           setStructure(menuList);
           setLoading(false);
         }
