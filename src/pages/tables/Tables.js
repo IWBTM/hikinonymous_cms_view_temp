@@ -51,11 +51,11 @@ export default function Tables({
             }}
           />
         </Grid>
-        <Grid item xs={12}>
-          <Widget title="Material-UI Table" upperTitle noBodyPadding>
-            <Table data={mock.table} />
-          </Widget>
-        </Grid>
+        {/*<Grid item xs={12}>*/}
+        {/*  <Widget title="Material-UI Table" upperTitle noBodyPadding>*/}
+        {/*    <Table data={mock.table} />*/}
+        {/*  </Widget>*/}
+        {/*</Grid>*/}
       </Grid>
     </>
   );

@@ -141,6 +141,7 @@ function Layout(props) {
             <div className={classes.fakeToolbar} />
             <Switch>
               {renderRoutes()}
+              <Route path="/cms/dashboard" component={Dashboard}/>
               <Redirect from="/" to="/cms/dashboard" />
             </Switch>
           </div>
