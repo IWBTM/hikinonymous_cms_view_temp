@@ -117,7 +117,13 @@ function Layout(props) {
   const renderRoutes = () => {
     return menuData.map((menu) =>
       menu.children.map((subMenu) => (
-        <Route key={subMenu.id} path={subMenu.link} component={Tables}/>
+        <Route key={subMenu.id} path={subMenu.link} render={
+          (props) =>
+            <Tables
+              title={menu.label}
+              menuInfo={subMenu}
+            />
+        }/>
       ))
     )
   };
