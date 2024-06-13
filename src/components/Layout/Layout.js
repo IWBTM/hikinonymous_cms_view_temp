@@ -16,12 +16,7 @@ import Sidebar from "../Sidebar";
 
 // pages
 import Dashboard from "../../pages/dashboard";
-import Typography from "../../pages/typography";
-import Notifications from "../../pages/notifications";
-import Maps from "../../pages/maps";
 import Tables from "../../pages/tables";
-import Icons from "../../pages/icons";
-import Charts from "../../pages/charts";
 
 // context
 import { useLayoutState } from "../../context/LayoutContext";
@@ -97,6 +92,7 @@ function Layout(props) {
                     id: data[j].cmsMenuSeq,
                     label: data[j].menuNm,
                     link: data[j].filePath,
+                    code: data[j].menuCode,
                     icon: setMenuIcon(data[j].menuCode)
                   });
                 }
