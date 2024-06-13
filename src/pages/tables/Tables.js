@@ -15,23 +15,25 @@ export default function Tables({
                                  tableData,
                                  title,
                                  menuInfo,
+                                 columns,
                                }) {
 
-  const { resultList, setResultList } = useState([]);
+  const [ resultList, setResultList ] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await api.get(menuInfo.filePath);
+        const response = await api.get(menuInfo.link);
         if (response.data.code === 200) {
           let data = response.data.data;
-          // cms menu에 메뉴별로 어떤 컬럼을 관리자 테이블에 보여줄지에 대한 공통 코드와 추가 컬럼 필요.
-          setResultList([]);
+
+          console.log('data:: ', data);
+          setResultList(data);
         }
       } catch (error) {
         console.error("Error fetching data:", error);
       }
-    }
+    };
 
     fetchData();
 
@@ -45,7 +47,7 @@ export default function Tables({
           <MUIDataTable
             title={menuInfo.label}
             data={resultList}
-            columns={["Name", "Company", "City", "State"]}
+            columns={columns}
             options={{
               filterType: "checkbox",
             }}
