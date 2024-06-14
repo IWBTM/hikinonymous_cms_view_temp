@@ -101,6 +101,8 @@ function Layout(props) {
             }
           }
           setMenuData(menuList);
+        } else {
+          console.error(response.data);
         }
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -118,17 +120,6 @@ function Layout(props) {
             <Tables
               title={menu.label}
               menuInfo={subMenu}
-              columns={
-              [
-                'NO',
-                '이메일',
-                '이름',
-                '마지막 로그인일',
-                '계정 상태',
-                '사용 여부',
-                '생성일'
-              ]
-            }
             />
         }/>
       ))
